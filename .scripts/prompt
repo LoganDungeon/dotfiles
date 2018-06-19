@@ -1,0 +1,6 @@
+#!/bin/bash
+# prompts user for input via rofi dmenu
+
+
+[ $(echo -e "No\nYes" | rofi -dmenu -i -p "$1" ) \
+	== "Yes" ] && $2

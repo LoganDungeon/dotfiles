@@ -1,0 +1,100 @@
+#!/usr/bin/python3
+# download a complete comic from readcomiconline.to
+
+import shutil
+
+import cfscrape
+import os
+import re
+import argparse
+
+from PIL import Image
+from fpdf import FPDF
+
+
+def main():
+    # create commandline parser
+    descStr = """
+    This program downloads an issue of a comic from readcomiconline.to
+    """
+    # create an argument parser and parse arguments
+    parser = argparse.ArgumentParser(prog='PROG', description=descStr)
+
+    parser.add_argument('title', help='Title of the comic to download')
+    parser.add_argument('number', type=int, help='Number of the issue to download')
+    parser.add_argument('-f', '--file', dest='fileName', required=False, help='Name of the output PDF')
+    parser.add_argument('-a', '--annual', dest='annual', action='store_true', required=False, help='Specify to download an annual comic instead of an issue.')
+    parser.add_argument('-k', '--keep', dest='keepDir', action='store_true', required=False, help='Flag for keeping the directory with the downloaded pictures')
+    args = parser.parse_args()
+
+    # name for the output file
+    if args.fileName:
+        pdf_name = args.fileName
+    else:
+        pdf_name = args.title + '_' + ("Annual" if args.annual else "Issue") + '_' + str(args.number).zfill(3) + '.pdf'
+
+    # url for the comic
+    url = 'http://readcomiconline.to/comic/' + args.title + '/' + \
+          ('annual' if args.annual else 'issue') + '-' + str(args.number)
+
+    # create temporary directory to store the images
+    dir_path = os.path.join(os.path.abspath(os.curdir), args.title + '_' + ("Annual" if args.annual else "Issue") + '_' + str(args.number).zfill(3))
+
+    # choose name for the comic
+    comic_name = args.title + '_' + ('Annual' if args.annual else 'Issue') + '_' + str(args.number).zfill(3)
+
+    download(url, dir_path, comic_name)
+    create_pdf(pdf_name, dir_path)
+
+    # delete temporary folder, if no longer needed
+    if not args.keepDir:
+        shutil.rmtree(dir_path)
+
+    print("Ready!")
+
+
+def download(url, dir_path, comic_name):
+    # create the folder, if it doesn't already exist
+    os.makedirs(dir_path, exist_ok=True)
+    # create pattern for the urls of te pictures
+    pattern = re.compile(r'lstImages.push\("(.+)"\);')
+
+    # download the comic webpage
+    scraper = cfscrape.create_scraper()
+    res = scraper.get(url)
+    res.raise_for_status()
+
+    # search through the website for the picture links
+    matches = pattern.findall(res.text)
+    # download every comic page
+    for i in range(len(matches)):
+        # Download the image.
+        print('Downloading image %s...' % matches[i])
+        res = scraper.get(matches[i])
+        res.raise_for_status()
+        # Save the image
+        imageFile = open(os.path.join(os.path.abspath(os.path.curdir), dir_path, comic_name + 'Page' + str(i + 1).zfill(3)), 'wb')
+        for chunk in res.iter_content(100000):
+            imageFile.write(chunk)
+        imageFile.close()
+
+
+def create_pdf(pdf_name, image_directory):
+    margin = 0
+    image_list = [os.path.join(image_directory, f) for f in os.listdir(image_directory)]
+    image_list.sort()
+
+    cover = Image.open(image_list[0])
+    width, height = cover.size
+
+    pdf = FPDF(unit='pt', format=[width + 2*margin, height + 2*margin])
+
+    for imagePath in image_list:
+        pdf.add_page()
+        pdf.image(imagePath, margin, margin, type='jpeg')
+
+    pdf.output(pdf_name, 'F')
+
+
+if __name__ == "__main__":
+    main()

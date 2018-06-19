@@ -1,0 +1,54 @@
+#!/bin/bash
+  
+path=${HOME}/.scripts/polybar/
+
+function main_loop {
+        while true; do
+        check_for_updates
+        sleep 600
+        done
+}
+
+function status {
+        echo $$ > ${path}polybar_updates.pid
+        while true; do
+        cat ${path}status
+        sleep 1
+        done
+}
+
+function check_for_updates {
+   checkupdates | nl -w2 -s '. ' >| ${path}repo.pkgs
+   trizen -Su --aur --quiet | sed 's/://;s/==/-/;s/[[:space:]]\+/ /g' >| ${path}aur.pkgs
+   updates=$(cat ${path}*.pkgs | wc -l)
+
+   echo "0" >| ${path}status
+   [ $updates -gt 0 ] && echo "%{F#e60053}$updates" >| ${path}status
+
+   >| ${path}packages
+   [ -s ${path}repo.pkgs ] && cat ${path}repo.pkgs >> ${path}packages
+   [ -s ${path}repo.pkgs ] && [ -s ${path}aur.pkgs ] && printf "\n" >> ${path}packages
+   [ -s ${path}aur.pkgs ] && sed '1iAUR Updates' ${path}aur.pkgs >> ${path}packages
+}
+
+function notify {
+if [[ $(cat ${path}status) -eq 0 ]]
+then
+        notify-send 0
+else
+        notify-send "$(cat ${path}packages)"
+fi
+}
+
+function upgrade {
+	urxvt -e packer --auronly --noconfirm -Syu
+   	urxvt -e sudo pacman -Syyu --noconfirm
+	echo "0" > ${path}status
+}
+
+
+[[ $# -eq 0 ]] && main_loop
+[[ $1 == "-s" ]] && status
+[[ $1 == "-c" ]] && echo '' > ${path}status && check_for_updates
+[[ $1 == "-n" ]] && notify
+[[ $1 == "-u" ]] && upgrade

@@ -1,0 +1,40 @@
+[general]
+accounts = unimail, privat
+starttls = yes
+ssl = yes
+pythonfile = ~/.config/mutt/credentials/imappwd.py
+
+[Account unimail]
+
+localrepository = unimail-local
+remoterepository = unimail-remote
+
+[Repository unimail-remote]
+auth_mechanisms = LOGIN
+type = IMAP
+remoteuser = jw32vufi
+remotepasseval = mailpasswd("unimail")
+remotehost = studserv.uni-leipzig.de
+remoteport = 993
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+
+[Repository unimail-local]
+type = Maildir
+localfolders = ~/.mail/unimail
+[Account privat]
+
+localrepository = privat-local
+remoterepository = privat-remote
+
+[Repository privat-remote]
+auth_mechanisms = LOGIN
+type = IMAP
+remoteuser = JonasW96@gmx.net
+remotepasseval = mailpasswd("privat")
+remotehost = imap.gmx.net
+remoteport = 993
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+
+[Repository privat-local]
+type = Maildir
+localfolders = ~/.mail/privat

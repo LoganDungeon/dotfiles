@@ -1,0 +1,27 @@
+#vim:config
+
+# GENERAL
+# colors
+colors.scheme=terminal
+# scaling
+visualizer.scaling.multiplier=10
+
+
+# SPECTRUM VISUALIZER
+# Smoothing
+visualizer.spectrum.smoothing.mode=monstercat
+# Falloff
+visualizer.spectrum.falloff.mode=fill
+# Bar appearance
+visualizer.spectrum.bar.width=2
+visualizer.spectrum.bar.spacing=0
+# margin
+visualizer.spectrum.top.margin=0.0
+visualizer.spectrum.bottom.margin=0.0
+visualizer.spectrum.right.margin=0.0
+visualizer.spectrum.left.margin=0.0
+# Stereo/Mono
+audio.stereo.enabled=false
+# Reversing
+visualizer.spectrum.reversed=false
+

@@ -1,0 +1,455 @@
+; vim:ft=dosini
+;===================================================== 
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/jaagr/polybar
+;
+;   The README contains alot of information
+;
+;=====================================================
+
+;-----------------------------------------------------
+;	V A R I A B L E S
+;-----------------------------------------------------
+
+[colors]
+background = ${xrdb:color0}
+background-alt = #aa202020
+foreground = ${xrdb:color7}
+secondarycolor = ${xrdb:color0}
+maincolor = ${xrdb:color1}
+col0 = ${xrdb:color0}
+col1 = ${xrdb:color1}
+col2 = ${xrdb:color2}
+col3 = ${xrdb:color3}
+col4 = ${xrdb:color4}
+col5 = ${xrdb:color5}
+col6 = ${xrdb:color6}
+col7 = ${xrdb:color7}
+col8 = ${xrdb:color8}
+col9 = ${xrdb:color9}
+col10 = ${xrdb:color10}
+col11 = ${xrdb:color11}
+col12 = ${xrdb:color12}
+col13 = ${xrdb:color13}
+col14 = ${xrdb:color14}
+col15 = ${xrdb:color15}
+col16 = ${xrdb:color16}
+col17 = ${xrdb:color17}
+alert = #ff0000
+
+;-----------------------------------------------------
+;	B A R S
+;-----------------------------------------------------
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+[bar/top]
+monitor = ${env:MONITOR:LVDS-1}
+width = 100%
+height = 21
+radius = 0
+fixed-center = true
+
+#background = ${colors.background-alt}
+background = ${colors.background-alt}
+foreground = ${colors.foreground}
+
+line-size = 4
+line-color = ${colors.col1}
+
+offset-x = 0
+offset-y = 0
+
+border-size = 0
+border-color = $colors.col0}
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = monospace:pixelsize=10;2
+font-1 = unifont:fontformat=truetype=11:antialias=false;2
+font-2 = Wuncon Siji:pixelsize=11;1
+font-3 = monospace:pixelsize=18;4
+font-4 = monospace:pixelsize=14;1
+font-5 = monospace:pixelsize=15;3
+font-6 = monospace:pixelsize=16;1
+font-7 = monospace:pixelsize=16;4
+
+modules-left = i3 arrow2 arrow4 arrow6
+modules-center = 
+modules-right = arrow5 arrow3 arrow1 wlan arrow3 battery arrow1 date arrow3
+
+tray-position = right
+tray-padding = 0
+
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+[bar/bottom]
+monitor = ${env:MONITOR:LVDS-1}
+width = 100%
+height = 21
+radius = 0
+fixed-center = true
+bottom = true
+
+background = ${colors.background-alt}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = ${colors.col1}
+
+border-size = 0
+border-color = ${colors.col0}
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+font-0 = monospace:pixelsize=10;2
+font-1 = unifont:fontformat=truetype=11:antialias=false;1
+font-2 = Wuncon Siji:pixelsize=11;1
+font-3 = monospace:pixelsize=18;4
+font-4 = monospace:pixelsize=14;1
+font-5 = monospace:pixelsize=15;3
+font-6 = monospace:pixelsize=16;1
+font-7 = monospace:pixelsize=16;4
+
+modules-left = arrow4 music arrow2 musicprev musicplay musicpause musicnext arrow4 volume arrow2 arrow4 arrow6
+modules-center = arrow5 arrow3 arrow1 xwindow arrow2 arrow4 arrow6
+modules-right = arrow5 arrow3 arrow1 xbacklight arrow3 filesystem arrow1 memory arrow3 cpu arrow1 temperature arrow3 updates-arch
+;-----------------------------------------------------
+;	D E C O R A T I O N S
+;-----------------------------------------------------
+
+[module/arrow1]
+type = custom/text
+content = "%{T6}%{T-}"
+content-foreground = ${colors.maincolor}
+content-background = ${colors.secondarycolor}
+
+[module/arrow2]
+type = custom/text
+content = "%{T6}%{T-}"
+content-foreground = ${colors.maincolor}
+content-background = ${colors.secondarycolor}
+
+[module/arrow3]
+type = custom/text
+content = "%{T6}%{T-}"
+content-foreground = ${colors.secondarycolor}
+content-background = ${colors.maincolor}
+
+[module/arrow4]
+type = custom/text
+content = "%{T6}%{T-}"
+content-foreground = ${colors.secondarycolor}
+content-background = ${colors.maincolor}
+
+[module/arrow5]
+type = custom/text
+content = "%{T6}%{T-}"
+content-foreground = ${colors.maincolor}
+content-background = ${colors.background-alt}
+
+[module/arrow6]
+type = custom/text
+content = "%{T6}%{T-}"
+content-foreground = ${colors.maincolor}
+content-background = ${colors.background-alt}
+
+;-----------------------------------------------------
+;	M O D U L E S
+;-----------------------------------------------------
+[module/xwindow]
+label-padding = 1
+type = internal/xwindow
+label = "%title:0:50:...%"
+format-background = ${colors.maincolor}
+format-foreground = ${colors.col7}
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+strip-wsnumbers = false
+enable-click = true
+enable-scroll = true
+reverse-scroll = false
+
+
+; Only show workspaces defined on the same output as the bar
+pin-workspaces = false
+
+label-mode-padding = 2
+label-mode-foreground = ${colors.col8}
+label-mode-background = ${colors.maincolor}
+
+; focused = Active workspace on focused monitor
+label-focused = %index%
+label-focused-padding = 2
+label-focused-background = ${colors.maincolor}
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %index%
+label-unfocused-padding = 2
+label-unfocused-background = ${colors.secondarycolor}
+
+
+; visible = Active workspace on unfocused monitor
+label-visible = %index%
+label-visible-padding = 2
+label-visible-background = ${colors.col8}
+
+; urgent = Woorkspace with urgency hint set
+label-urgent = %index%!
+label-urgent-padding = 2
+label-urgent-background = ${colors.alert}
+
+[module/xbacklight]
+type = internal/xbacklight
+card = intel_backlight
+enable-scroll = true
+
+format = "<label><bar> "
+format-background = ${colors.maincolor}
+label = " %{T4}%{T-} %percentage% "
+bar-width = 10
+bar-indicator = |
+bar-indicator-foreground = #ff
+bar-indicator-font = 2
+bar-fill = ─
+bar-fill-font = 2
+bar-fill-foreground = ${colors.col6}
+bar-empty = ─
+bar-empty-font = 2
+bar-empty-foreground = ${colors.col2}
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format = "<label> <ramp-load>"
+format-background = ${colors.secondarycolor}
+format-prefix = " CPU "
+format-prefix-background = ${colors.secondarycolor}
+#format-prefix = " "
+format-prefix-foreground = ${colors.col7}
+label = %percentage%%
+
+ramp-load-0 = "▁ "
+ramp-load-1 = "▂ "
+ramp-load-2 = "▃ "
+ramp-load-3 = "▄ "
+ramp-load-4 = "▅ "
+ramp-load-5 = "▆ "
+ramp-load-6 = "▇ "
+ramp-load-7 = "█ "
+
+[module/memory]
+type = internal/memory
+interval = 2
+format = <label>
+format-background = ${colors.maincolor}
+format-prefix = " RAM "
+format-prefix-background = ${colors.maincolor}
+format-prefix-foreground = ${colors.col7}
+label = "%percentage_used%% "
+#  f2db
+#  e266
+
+[module/wlan]
+type = internal/network
+interface = wlp2s0
+interval = 3
+
+format-connected = <label-connected>
+format-connected-background = ${colors.maincolor}
+label-connected = " %{T4}%{T-} %essid% "
+
+format-disconnected = <label-disconnected>
+format-disconnected-background = ${colors.maincolor}
+label-disconnected = " not connected "
+
+[module/battery]
+type = internal/battery
+full-at = 98
+battery = BAT0
+adapter = AC0
+poll-interval = 5
+
+time-format = %H:%M
+
+# charging
+format-charging = <animation-charging> <label-charging>
+format-charging-background = ${colors.secondarycolor}
+label-charging = "%percentage%% %time% "
+animation-charging-0 = "  %{T2}%{T-}"
+animation-charging-1 = "  %{T2}%{T-}"
+animation-charging-2 = "  %{T2}%{T-}"
+animation-charging-3 = "  %{T2}%{T-}"
+animation-charging-4 = "  %{T2}%{T-}"
+animation-charging-foreground = ${colors.foreground}
+animation-charging-framerate = 300
+
+
+# discharging
+format-discharging = <ramp-capacity> <label-discharging>
+format-discharging-background = ${colors.secondarycolor}
+label-discharging = "%percentage%% %time% "
+ramp-capacity-0 = %{T2} %{T-}
+ramp-capacity-1 = %{T2} %{T-}
+ramp-capacity-2 = %{T2} %{T-}
+ramp-capacity-3 = %{T2} %{T-}
+ramp-capacity-4 = %{T2} %{T-}
+ramp-capacity-foreground = ${colors.foreground}
+
+# full
+format-full = <label-full>
+format-full-background = ${colors.secondarycolor}
+label-full = "%{T2} %{T-} Full "
+format-full-prefix-foreground = ${colors.col7}
+
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+format-mounted = <label-mounted>
+format-mounted-background = ${colors.secondarycolor}
+mount-0 = /
+label-mounted = " %{T4}%{T-} %percentage_used%% "
+format-unmounted = <label-unmounted>
+format-unmounted-background = ${colors.secondarycolor}
+label-unmounted = %mountpoint% not mounted
+
+[module/date]
+type = internal/date
+interval = 1
+
+date = " %{T4}%{T-} %d.%m.%Y"
+date-alt = " %{T4}%{T-} %a, %d %b %y"
+time = "%{T4}%{T-} %H:%M:%S"
+time-alt = "%{T4}%{T-} %I:%M:%S %p"
+
+format = " <label> "
+format-background = ${colors.maincolor}
+label = %date% %time%
+
+[module/volume]
+type = internal/volume
+
+format-volume = "<ramp-volume> <label-volume> <bar-volume>  "
+format-volume-background = ${colors.maincolor}
+ramp-volume-0 = " %{T4}%{T-}"
+ramp-volume-1 = " %{T4}%{T-}"
+ramp-volume-2 = " %{T4}%{T-}"
+
+label-volume = %percentage%
+
+format-muted = <label-muted>
+format-muted-background = ${colors.maincolor}
+label-muted = " %{T4}%{T-}  sound muted"
+
+bar-volume-width = 10
+bar-volume-foreground-0 = ${xrdb:color12}
+bar-volume-foreground-1 = ${xrdb:color12}
+bar-volume-foreground-2 = ${xrdb:color12}
+bar-volume-foreground-3 = ${xrdb:color12}
+bar-volume-foreground-4 = ${xrdb:color12}
+bar-volume-foreground-5 = ${xrdb:color13}
+bar-volume-foreground-6 = ${xrdb:color14}
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 60
+
+format = " <ramp> <label> "
+format-background = ${colors.maincolor}
+format-warn = " <ramp> <label-warn> "
+format-warn-background = ${colors.maincolor}
+
+label = "%temperature%"
+label-warn = "%temperature%"
+label-warn-foreground = ${colors.alert}
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-3 = 
+ramp-4 = 
+
+[module/updates-arch]
+type = custom/script
+exec = "poly_updates -s"
+tail = true
+format = <label>
+format-background = ${colors.secondarycolor}
+format-prefix = " "
+click-right = "poly_updates -n"
+click-left = "poly_updates -c&"
+#click-middle = "poly_updates -n"
+
+######################################### SPOTIFY ##########################################################
+
+
+[module/music]
+type = custom/script
+exec = $HOME/.scripts/polybar/mediaplayer.py
+#exec-if = pgrep -x spotify
+interval = 5
+
+format-background = ${colors.col1}
+label = %{T4}%{T-} %output:0:100:%
+format-padding = 1
+
+[module/musicplay]
+type = custom/text
+content = " %{T4}%{T-}"
+content-background = ${colors.secondarycolor}
+click-left = dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Play
+
+[module/musicpause]
+type = custom/text
+content = " %{T4}%{T-}"
+content-background = ${colors.secondarycolor}
+click-left = dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Pause
+
+[module/musicprev]
+type = custom/text
+content = " %{T4}%{T-}"
+content-background = ${colors.secondarycolor}
+click-left = dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Prev
+
+[module/musicnext]
+type = custom/text
+content = " %{T4}%{T-} "
+content-background = ${colors.secondarycolor}
+click-left = dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+
+######################################### SPOTIFY ##########################################################
+
+
+[settings]
+screenchange-reaload = true
+#compositing-background = xor
+#compositing-background = screen
+#compositing-background = source
+#compositing-border = over
+
